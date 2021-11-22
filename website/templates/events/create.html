@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+<style>
+  .card {
+  margin: 0 auto; /* Added */
+  float: none; /* Added */
+  margin-bottom: 10px; /* Added */
+}
+</style>
+
+<div class="container-fluid backgroundCustom margin card2">
+  <div class="container-fluid margin2 pad ">
+    <!--get flash messages-->
+    {% with messages = get_flashed_messages(category_filter=["event"]) %}
+    {% if messages %}
+        {% for message in get_flashed_messages() %}
+        <div class ="alert alert-warning">
+            <button type="button" class="close btn-success" data-dismiss="alert" aria-label="close">x</button>
+            {{message}}
+        </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+  </div>
+
+  <!--create form-->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="pad card col-lg-8 col-md-6 col-xs-2">
+        <h1 class = "text-center pad changeFont card backgroundCustom2 border-secondary">Add New Event</h1>
+        <h6 class = "text-center changeFont pad">Enter a Event that you advertise to customers.</h6>
+        <div class="row pad">
+          <div class="card form1 pad margin4">
+              {{ wtf.quick_form(form, button_map={'submit':'success'}) }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--cancel button-->
+  <div class = "col text-center pad">
+    <a href="{{ url_for('main.index') }}" class="btn-lg btn-danger text-center nounderline">Cancel</a>
+  </div>
+</div>
+{% endblock %}

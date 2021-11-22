@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<div class="page-header center pad">
+    <h4>{{heading}}</h4>
+</div>
+<!--get flashed messages-->
+<div class="container-fluid">
+{% with messages = get_flashed_messages(category_filter=["register_error"]) %}
+{% if messages %}
+    {% for message in get_flashed_messages() %}
+    <div class ="alert alert-warning">
+        <button type="button" class="close btn-success" data-dismiss="alert" aria-label="close">x</button>
+        {{message}}
+    </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+
+{% with messages = get_flashed_messages(category_filter=["login_error"]) %}
+{% if messages %}
+    {% for message in get_flashed_messages() %}
+    <div class ="alert alert-warning">
+        <button type="button" class="close btn-success" data-dismiss="alert" aria-label="close">x</button>
+        {{message}}
+    </div>
+    {% endfor %}
+{% endif %}
+{% endwith %}
+</div>
+
+<!-- login form -->
+<div class="col-md-6 center margin">
+{{wtf.quick_form(form, button_map={'submit':'success'})}}
+</div>
+
+<!-- register form -->
+{% if heading|lower =='login' %}
+<div class="col-md-4 center margin">
+    <p>New user? <a href="{{ url_for('auth.register') }}">Click here to register</a>.</p>
+</div>
+{% endif %}
+
+{% endblock %}

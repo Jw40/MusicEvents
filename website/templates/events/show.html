@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+<style>
+  .card {
+        margin: 0 auto; /* Added */
+        float: none; /* Added */
+        margin-bottom: 10px; /* Added */
+}
+.card-img-top {
+    width: 100%;
+    height: 50vw;
+    object-fit: cover;
+}
+</style>
+  <!--get flashed messages-->
+  {% with messages = get_flashed_messages(category_filter=["event_error"]) %}
+  {% if messages %}
+  <div class="container-fluid margin2 pad">
+      {% for message in get_flashed_messages() %}
+      <div class ="alert alert-warning">
+          <button type="button" class="close btn-success" data-dismiss="alert" aria-label="close">x</button>
+          {{message}}
+      </div>
+      {% endfor %}
+  {% endif %}
+  {% endwith %}
+</div>
+
+{% with messages = get_flashed_messages(category_filter=["comment"]) %}
+  {% if messages %}
+  <div class="container-fluid pad2">
+      {% for message in get_flashed_messages() %}
+      <div class ="alert alert-warning">
+          <button type="button" class="close btn-success" data-dismiss="alert" aria-label="close">x</button>
+          {{message}}
+      </div>
+      {% endfor %}
+  {% endif %}
+  {% endwith %}
+</div>
+
+<div class="container-fluid margin4">  
+    <div class="row mt-1 mb-3">  
+        <div class="col-md-12">  
+            <div class="float-left">  
+                 <h1 class="mb-0 card backgroundCustom2 border-secondary">Music Event: <b class = "changeTextColour justify-content-center">{{event.name}}</b></h1>  
+            </div>  
+        </div>  
+    </div>  
+ 
+    <!-- Event --> 
+    <div class="row container-fluid ">  
+      <div class="col-md-12 ">  
+        <div class="card backgroundCustom">  
+          <div class="card-body backgroundCustom">  
+            <div class="media backgroundCustom">  
+              <img class="img-fluid card-img-top center  backgroundCustom pad margin" src="{{event.image}}" style="width: 53rem;">  
+              <div class="media-body">  
+                <h2 class="mt-0 text-center text-uppercase changeFont2"><b>{{event.artist}}</b></h2>  
+                <h5 class="text-center text-light"><br>Venue:<br /> {{event.venue}}</h5>
+                <h5 class="text-center  text-light"><br>Date:<br />{{event.date}}</h5>
+                <h5 class="text-center  text-light"><br>Ticket Price (AUD):</br>${{event.price}}</h5>
+                <h5 class="text-center text-light"><br>Age group:</br>{{event.ages}}</h5>
+                {% for event in event.status %}
+                {% if event.status == "Upcoming" %}
+                <h5 class="text-center text-info "><br>Status:</br>{{event.status}}</h5>
+                {% elif event.status == "Booked" %}
+                <h5 class="text-center text-danger "><br>Status:</br>{{event.status}}</h5>
+                {% elif event.status == "Canceled" %}
+                <h5 class="text-center text-warning "><br>Status:</br>{{event.status}}</h5>
+                {% elif event.status == "Inactive" %}
+                <h5 class="text-center Custom2 "><br>Status:</br>{{event.status}}</h5>
+                {% endif %}
+                {% endfor %}
+                <div class="col-12 mb-3 mt-5 text-light text-center event-description justify-content-center">
+                  <h5>Event Description:</h5>
+                  <p>{{event.description}}</p>
+                </div>
+                <h5 class="text-center  Custom1"><br>Tickets Available:</br>{{event.quota}}</h5>
+                {% for event in event.status %}
+                {% if event.status == 'Canceled' or event.status == 'Booked' or event.status == 'Inactive'%}
+                <!-- Button trigger modal -->
+                <div class="container pad">
+                  <div class="row">
+                    <div class="col text-center">
+                      <a href="#">
+                        <button type="button text-center" class="btn btn-secondary" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal" disabled>
+                          Book Now
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div> 
+                {% else %}
+                <div class="container pad">
+                  <div class="row">
+                    <div class="col text-center">
+                      <a href="#">
+                        <button type="button text-center" class="btn btn-primary btn-primary" data-bs-toggle="modal"
+                          data-bs-target="#exampleModal">
+                          Book Now
+                        </button>
+                      </a>
+                    </div>
+                  </div>
+                </div> 
+                {% endif %}
+                {% endfor %} 
+              </div>  
+            </div>  
+          </div>  
+        </div>  
+      </div>  
+    </div> 
+
+        <!-- inner modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-5" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Booking Tickets: {{event.name}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <div class="center">
+                  <p class="text-center card">Ticket Price:<strong>${{event.price}}</strong></p>
+                  <p class="text-center">Enter amount of tickets.
+                    <h6 class="text-center  Custom1"><br>Tickets Available:</br>{{event.quota}}</h6>
+                  </p>
+                  <div class="pad">
+                    {{wtf.quick_form(bform,"/events/{0}/booking".format(event.id), button_map={'submit':'success'})}}  
+                  </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    <hr>  
+    <!-- Comments -->  
+    <div class="row">  
+      <div class="col-md-2 text-center center">  
+        <h2>Comments</h2>
+      </div>  
+    </div>  
+    <div class="row col-lg-8 col-md-6 col-sm-12 border-bottom card2"> 
+      {{wtf.quick_form(cform,"/events/{0}/comment".format(event.id), button_map={'submit':'success'})}} 
+      {% for comment in event.comments %}
+      <div class="card col-lg-12 col-md-8 col-sm-12 pad" id="Comments">  
+        <b >{{comment.user.name}} <span class="ml-2 text-muted">{{comment.created_at.strftime("%d %B, %Y")}}</span></b>&#128231
+        <p>{{comment.text}}</p>  
+      </div> 
+      {% endfor %} 
+      <br>
+      
+    </div>  
+</div> 
+{% endblock %}

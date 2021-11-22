@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+<style>
+    #searchbar {
+    margin: 0 auto;
+    display: block;
+    width: 80%;
+}
+</style>
+    <div class="container-fluid backgroundCustom margin4">
+        <h3 class = "pad">Search Events</h3>
+        <div class = " ">
+            <form class=" form-inline d-flex flex-nowrap searchbar" id = searchbar action="{{url_for('main.search')}}" >
+            
+                <input type="text" name="search" class="pad2 form-control flex-grow-1 my-1 mr-sm-2 a margin3" id="innerSearchBar">
+                <button type="submit" class="flex-shrink-1 btn btn-primary my-1">&#128269</button>
+            </form>
+        </div>
+        <!--get flashed messages-->
+        <h3 class="pad margin1 text-center">Search Results for:
+            {% with messages = get_flashed_messages(category_filter=["search_error"]) %}
+        {% if messages %}
+            {% for message in get_flashed_messages() %}
+               <b class = "changeTextColour"><br>"{{message}}"</b>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        </h3>
+        
+        <br>
+        <hr>
+        <br>
+        <!--display search-->
+        <div class="row">
+            <div class = "pad col-12 col-lg-12 col-md-12 col-sm-12 card center margin4" style="width: 60rem;">
+                {% for event in event %}
+                <div class="card text-center">
+                    <h5 class="card-title pad"><b>{{event.name}}</b></h5>
+                    <img class="img-fluid center pad" src="{{event.image}}" style="width: 53rem;">
+                    <div class="card-body">
+                        <h5 class="card-title ">Artist:<br> {{event.artist}}</h5>
+                        {% for event in event.status %}
+                        {% if event.status == "Upcoming" %}
+                        <h5 class="text-center text-info "><br>Status:</br>{{event.status}}</h5>
+                        {% elif event.status == "Booked" %}
+                        <h5 class="text-center text-danger "><br>Status:</br>{{event.status}}</h5>
+                        {% elif event.status == "Canceled" %}
+                        <h5 class="text-center text-warning "><br>Status:</br>{{event.status}}</h5>
+                        {% elif event.status == "Inactive" %}
+                        <h5 class="text-center Custom2 "><br>Status:</br>{{event.status}}</h5>
+                        {% endif %}
+                        {% endfor %}
+                        <h5 class="card-text pad">Category: {{event.category}}</h5>
+                        <p class="card-text event-description">Description: <br>{{event.description}}</p>
+                    </div>
+                    <div class="card-footer"><a href = "{{url_for('events.show', id=event.id)}}" class ="btn  backgroundCustom4 "> View Details </a></div>
+                </div>
+                <br>
+                <br>
+                <hr>
+                <br>
+                <br>
+                {% endfor %}
+                {% if event|length == 0 %}
+                <div class = "card center margin">
+                    <h6 class="card-title text-danger text-center pad2"><b>No events Found.</b></h6>
+                    <hr>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+     <!--back to top button-->
+     <div class = "col text-center">
+        <a href="#" class="btn text-center buttonCustom2">Back to top</a>
+    </div>
+{% endblock %}

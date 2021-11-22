@@ -1,0 +1,151 @@
+Gordon Wong (22):
+      Update models.py
+      Update models.py
+      Update register()
+      updated auth.py(email check), models.py(added event owner column)
+      Merge branch 'main' of https://github.com/Jw40/eventsite
+      added venue address, city, state, zipcode, owner column to the database, change the datatype of some columns. For events.py, added event status, the web will redirect user back to home page after the event has been added to the database
+      update booking history to show booking records by user
+      update event.py and booking_history.html
+      Update booking_history.html
+      updated index.html the "find ticket" button for the dynamic content should work.  add a min value =1 to quantity in bookingform
+      removed the bracket for event status
+      update booking_history.html, will show 'you have no booking record' if you have no record
+      update event.py and forms.py to supports date and time when create/edit event
+      update event.py, event status will now be deleted together
+      updated base.html, hide my event and booking event history from non authenticated user
+      Update base.html
+      updated model.py, remove id, set event_id as pk in event_status
+      update models.py
+      updated models.py
+      add 404 error and 500 error html page and code in __init__.py
+      added images to static\image
+      add events
+
+James Wyatt (87):
+      this is the first git commit
+      change desintionForm to EventForm
+      forms Please enter the commit message for your changes. Lines starting
+      add UserMixin
+      Change to Auth.py Login function to enable user login register logout
+      Added Show.html, Create.html and fixed events.py to show page
+      updated events.py, enabled comments and added login_required
+      Added dynamic content to index.html (linked button to event)
+      Change events/forms/models.py to have categroy and status
+      Added Status to Event object and displayed on the show.html and index.html, fixed categories to show by category on index.html, fixed owner column user id type error
+      Add search.html and search functionaility, added modal to show.html, fixed categories on index.html (wrote query to produce event in categroy), updated css on index/show/search.html
+      fix index.html CSS line centering
+      Fixed index.html CSS line centering
+      Added Category.html, changed index.html to show popular categorgies, updated forms.py/views.py to add more categories and generate list from db
+      added help.html, changed some CSS in show.html comments and category.html - attempted to add form to show.html modal but still some problems
+      fix user id type error in booking and added jinja2 if statement to disable button if status is booked, canceled or inactive
+      change flash messages
+      Merge branch 'main' of https://github.com/Jw40/eventsite
+      fixed flash messaging on all pages (was showing only on register page), fixed whitespace on smaller view in categories.html, fixed booking modal html, added thankyou.html for when booking is sucessful
+      change CSS on a few create.html, base.html, category.html and booking history.html, updated booking_history so the correct price is shown, updated search to take in event name or event category in search query
+      change to model.py __repr__, change to style sheet, update CSS booking_history,html update search.html CSS
+      update booking_history.html table and responsive image
+      add return to top button
+      change CSS of create.html (more resposive)
+      changed event.py booking function, added elif statement and - quanity of tickets off the event quota, still needs work for updating status
+      add Procfile and requirements.txt for Heroku depolyment
+      remove project file directory for heroku
+      change to reqirments.txt
+      cange to requirments.txt
+      change to requirments.txt
+      change requriments.txt
+      change to Procfile
+      change requriments.txt
+      change requriments.txt
+      added custom CSS to index/search/booking_history/my_events etc
+      updated css search.html, show.html
+      fix flash messages for event create/edit
+      added ticket quota on show.html
+      change to CSS, titles borders, button borders, padding, add booking histroy button to thankyou.html
+      commented html files, formated code
+      add different colors for status
+      add different colors for status on category/show
+      change jumbo image
+      test
+      Use env var for database
+      test
+      test
+      test
+      test
+      test
+      postgres
+      postgres
+      postgres
+      postgres
+      postgres
+      postgres
+      test
+      test
+      change jumbotron if statement to accept id
+      postgres db
+      change jumbo id
+      postgres db
+      sqlite db
+      postgres
+      postgres
+      postgres
+      postgres
+      sqlite
+      sqlite
+      change ticket quota color
+      Merge branch 'main' of https://github.com/Jw40/eventsite
+      test
+      test
+      test
+      test
+      postgres
+      postgres
+      sqlite
+      sqlite
+      testing 500 error
+      testing 500 err
+      testing 500 error
+      testing 500 error
+      testing 500 error
+      sqlite
+      postgres db
+      postgres db
+
+Will Fitzpatrick (13):
+      small change to events.py to allow for event creation, added some fields to EventForm
+      added BookingForm to forms.py
+      updated BookingForm
+      added more fields to EventForm
+      fixed the booking modal to display booking form
+      Added age group to events and inability to book over quota
+      Updated database to include age group
+      Status now changes to 'booked'
+      removed brackets for event status for other pages
+      added confirmation modal to event delete
+      delete event modal now deletes correct event
+      added phone number and address to user
+      Merge branch 'main' of https://github.com/Jw40/eventsite
+
+licy0927 (15):
+      The database has been updated, and the venue and date columns have been added. Now the event details can display the venue and date normally. Modified some css and added the button link of show.html, now you can jump to http://127.0.0.1:5000/events/.
+      The database has been updated, and the venue and date columns have been added. Now the event details can display the venue and date normally. Modified some css and added the button link of show.html, now you can jump to http://127.0.0.1:5000/events/.
+      added booking history(still have some problems, I will do them later)
+      added booking history
+      add delete function
+      add edit fucntion, but still have a lot of problems
+      add My_event page, and move delete and edit function to this page
+      add My_event page, and move delete and edit function to this page
+      add My_event page, and move delete and edit function to this page
+      add My_event page, and move delete and edit function to this page
+      fix problems user can edit date and image
+      fix problems user can edit date and image
+      display orgin data when edit events
+      fix problems that user cannot change event_status
+      fix problems that user cannot change event_status
+
+willfitz8 (4):
+      Update events.py
+      Update register() to collect user details and commit to database
+      add UserMixin utilisation to models.py
+      updated /booking in events.py
+

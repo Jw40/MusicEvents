@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+
+<div class="container-fluid backgroundCustom card2">
+    <div class="container-fluid pad2">
+        <!--get flashed messages-->
+        {% with messages = get_flashed_messages(category_filter=["edit"]) %}
+        {% if messages %}
+            {% for message in get_flashed_messages() %}
+            <div class ="alert alert-warning">
+                <button type="button" class="close btn-success" data-dismiss="alert" aria-label="close">x</button>
+                {{message}}
+            </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+    
+    <div class = "row ">
+        <div class="col-12 col-lg-6 col-md-6 col-sm-6 card center margin4 pad " style="width: 60rem;">   
+            <h1 class = "text-center pad changeFont card backgroundCustom2 center border-secondary"><strong>MyEvents</strong></h1>     
+            <h6 class = "text-center changeFont pad">Events you are hosting.</h6>
+            <hr>
+
+            <!--my event details-->
+            {% for record in records %} 
+            <br>
+            <div class = "card">
+                <p class ="text-center">Event ID: <b>{{record[1].id}}</b></p>
+                <img src="{{record[1].image}}" class="center" alt="Responsive image">
+
+                {% if record[1].status[0] == "Upcoming" %}
+                <h5 class="text-center text-info "><br>Status:</br>{{record[1].status[0]}}</h5>
+                {% elif record[1].status[0] == "Booked" %}
+                <h5 class="text-center text-danger "><br>Status:</br>{{record[1].status[0]}}</h5>
+                {% elif record[1].status[0] == "Canceled" %}
+                <h5 class="text-center text-warning "><br>Status:</br>{{record[1].status[0]}}</h5>
+                {% elif record[1].status[0] == "Inactive" %}
+                <h5 class="text-center Custom2 "><br>Status:</br>{{record[1].status[0]}}</h5>
+                {% endif %}
+                <!--displays status in dark text-->
+                <h6 class="card-title Custom2 text-center pad">Status: <b>{{record[1].status[0]}}</b></h6>
+                <p class ="text-center">Music Event: <b>{{record[1].name}}</b></p>
+                <p class ="text-center">Ticket Qty: {{record[1].quota}}</p>
+                <p class ="text-center">Event Date: {{record[1].date}}</p>
+                <p class ="text-center">Venue: {{record[1].venue}}</p>
+                <p class ="text-center">Address: {{record[1].venue_address}}</p>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <a href="{{url_for('events.show', id=record[1].id)}}" class="col-md-3 col-md-offest-3 btn btn-primary">View Event Details</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button type="button" class="col-md-3 btn delete-custom btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal{{record[1].id}}">Delete</button>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="{{url_for('events.edit_event', id=record[1].id)}}" class="col-md-3 btn btn-success">Edit</a>
+                    </div>
+                </div>
+            </div>
+            <br><hr><br>
+                
+            <!--modal to confirm deleting an event-->    
+            <div class="modal" tabindex="-1" id="confirmModal{{record[1].id}}">
+                <div class="modal-dialog" id="{{record[1].id}}">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">Confirm event deletion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    <p>Are you sure you want to delete event <strong>{{record[1].name}}</strong>?</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <a href="{{url_for('events.delete_event', id=record[1].id)}}" class="col-md-3 btn btn-danger">Delete</a>
+                    </div>
+                </div>
+                </div>
+            </div>      
+              
+            <!--display no events if len == 0-->
+            {% endfor %}   
+            {% if records[0]|length == 0 %}
+            <div class = "card  margin">
+                <h6 class="card-title text-danger text-center pad2"><b>No events.</b></h6>
+                <hr>
+            </div>
+        </div>
+        <br>
+            {% endif %}
+    </div>
+    </div>
+    <!--back to top button-->
+    <div class = "col text-center pad">
+        <a href="#" class="btn text-center buttonCustom2 border-secondary">Back to top</a>
+    </div>
+</div>
+{% endblock %}
